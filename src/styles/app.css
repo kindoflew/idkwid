@@ -1,0 +1,74 @@
+@import '@fontsource/anton';
+@import '@fontsource/open-sans';
+@import '@fontsource/fira-mono';
+
+:root {
+  font-family: 'Open Sans', sans-serif;
+  --font-heading: 'Anton', sans-serif;
+  --font-mono: 'Fira Mono', monospace;
+
+  --heading-color: rgba(0, 0, 0, 0.7);
+  --text-color: #444444;
+  --text-light: #fff5dc;
+  color: var(--text-color);
+  /* --background-color: #fdd5db; */
+  --background-color: #a2cfa2;
+  /* --background-color: #363636; */
+  --background-light: #fff6e5;
+  --border-color: #8b4512;
+
+  --margin-small: 1rem;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--background-color);
+}
+
+#svelte {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+h1,
+h2,
+p {
+  color: var(--heading-color);
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 0 0 1rem 0;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+p {
+  line-height: 1.5;
+  font-size: 1.1rem;
+  margin: 0 0 var(--margin-small) 0;
+}
+
+a,
+a:visited {
+  color: var(--heading-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:focus:not(:focus-visible) {
+  outline: none;
+}

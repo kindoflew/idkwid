@@ -1,0 +1,7 @@
+Hi! My name is Lewis and I don't know what I'm doing.
+
+That is to say, I'm a self-taught web developer and I'm still figuring it all out. This blog is going to be a record of me learning things and eventually (maybe) I'll know what I'm doing. And hopefully you learn some stuff too.
+
+Oh wait. You wanted to know about the *blog*. That makes sense. I'm a nerd and you're probably a nerd too. Ok, well it's built with [SvelteKit](https://kit.svelte.dev/) and [MDsveX](https://mdsvex.pngwn.io/) (Svelte-flavored MDX). I'm also using [PrismJS](https://prismjs.com/) for syntax highlighting (plus a couple of cool [Rehype](https://github.com/rehypejs/rehype) plugins). The theme for code snippets is a (very slightly) modified [Gruvbox Dark](https://github.com/PrismJS/prism-themes/blob/master/themes/prism-gruvbox-dark.css). Also, feel free to just [check out the repo]().
+
+I'm currently looking for a full-time developer position, so if your company is hiring for associate/junior front-end developers -- feel free to get in touch on Twitter: [@kindoflew](https://twitter.com/kindoflew).
