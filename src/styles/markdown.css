@@ -1,3 +1,7 @@
+h3 {
+  margin-top: 2.5rem;
+}
+
 a[href*='#'] {
   position: relative;
 }
@@ -48,10 +52,17 @@ tr:nth-child(2n) {
 
 .md-link {
   text-decoration: underline;
-  text-underline-position: under;
 }
 
 .md-link:hover {
   text-decoration: none;
-
+  background-color: var(--background-color);
 }
+
+/* .external {
+  position: relative;
+}
+.external::after {
+  content: '↗';
+  font-size: 0.9rem;
+} */
