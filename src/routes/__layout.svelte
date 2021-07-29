@@ -24,7 +24,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: stretch;
     padding: 3rem;
     width: 100%;

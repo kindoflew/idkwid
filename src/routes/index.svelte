@@ -40,8 +40,13 @@
 <style>
   div {
     padding: 1rem;
+    margin-bottom: 1.5rem;
     border-radius: 5px;
     border: 2px solid var(--background-color);
+  }
+
+  div:last-of-type {
+    margin-bottom: 0;
   }
 
   h2 {
