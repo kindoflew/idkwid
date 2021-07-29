@@ -25,19 +25,17 @@
   <title>i don't know what i'm doing</title>
 </svelte:head>
 
-<section>
-  {#each posts as post}
-    <div>
-      <h2>
-        <a href={`./posts/${post.slug}`}>
-          {post.title}
-        </a>
-      </h2>
-      <p class="date">{formatDate(post.date)}</p>
-      <p class="summary">{post.summary}</p>
-    </div>
-  {/each}
-</section>
+{#each posts as post}
+  <div>
+    <h2>
+      <a href={`./posts/${post.slug}`}>
+        {post.title}
+      </a>
+    </h2>
+    <p class="date">{formatDate(post.date)}</p>
+    <p class="summary">{post.summary}</p>
+  </div>
+{/each}
 
 <style>
   div {

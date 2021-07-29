@@ -6,9 +6,7 @@
   import Header from '$components/Header.svelte';
   import Footer from '$components/Footer.svelte';
   import 'normalize.css';
-  import '../styles/app.css';
-  import '../styles/markdown.css';
-  import '../styles/prismTheme.css';
+  import '../styles/index.css';
 </script>
 
 <Header />
