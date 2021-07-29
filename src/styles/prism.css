@@ -69,10 +69,14 @@ pre[class*='language-'] {
 :not(pre) > code {
   padding: 0.2em;
   border-radius: 0.3em;
-  background: #1d2021;
-  color: #ebdbb2;
+  background: #d3c2ab;
+  color: #1d2021;
 }
 
+.token.operator,
+.token.punctuation,
+.token.attr-value .punctuation,
+.token.tag .punctuation,
 .token.comment,
 .token.prolog,
 .token.cdata {
