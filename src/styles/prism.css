@@ -1,5 +1,5 @@
 /**
- * (Slightly modified) Gruvbox dark theme
+ * Gruvbox dark theme (that I modified a little)
  *
  * Adapted from a theme based on:
  * Vim Gruvbox dark Theme (https://github.com/morhetz/gruvbox)
@@ -83,17 +83,14 @@ pre[class*='language-'] {
   color: #a89984; /* fg4 / gray1 */
 }
 
+.token.constant,
+.token.variable,
 .token.delimiter,
 .token.boolean,
 .token.keyword,
 .token.important,
 .token.atrule {
   color: #fb4934; /* red2 */
-}
-
-.token.operator,
-.token.punctuation {
-  color: #a89984; /* fg4 / gray1 */
 }
 
 .token.doctype,
@@ -104,12 +101,12 @@ pre[class*='language-'] {
 }
 
 .token.number {
-  color: #fe8019;
+  color: #fe8019; /* orange2 */
 }
 
 .token.tag,
 .token.tag .punctuation {
-  color: #83a598;
+  color: #83a598; /* blue2 */
 }
 
 .token.function,
@@ -118,29 +115,16 @@ pre[class*='language-'] {
   color: #d3869b; /* purple2 */
 }
 
-.token.constant,
-.token.variable {
-  color: #fb4934; /* red2 */
-}
-
+.token.attr-value,
 .token.string,
 .token.char,
 .token.property {
   color: #b8bb26; /* green2 */
 }
 
-.token.attr-value .punctuation,
-.token.tag .punctuation {
-  color: #a89984; /* fg4 / gray1 */
-}
-
 .token.url {
   color: #b8bb26; /* green2 */
   text-decoration: underline;
-}
-
-.token.attr-value {
-  color: #b8bb26; /* green2 */
 }
 
 .token.regex {
