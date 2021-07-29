@@ -27,7 +27,7 @@
   "dependencies": {
     "@fontsource/anton": "^4.5.0",
     "@fontsource/fira-mono": "^4.2.2",
-    "@fontsource/open-sans": "^4.5.0",
+    "@fontsource/roboto": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
     "cookie": "^0.4.1",
     "normalize.css": "^8.0.1",

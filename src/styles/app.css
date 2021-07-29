@@ -1,9 +1,9 @@
 @import '@fontsource/anton';
-@import '@fontsource/open-sans';
+@import '@fontsource/roboto';
 @import '@fontsource/fira-mono';
 
 :root {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
   --font-heading: 'Anton', sans-serif;
   --font-mono: 'Fira Mono', monospace;
 
