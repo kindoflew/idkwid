@@ -41,9 +41,7 @@
   div {
     padding: 1rem;
     border-radius: 5px;
-    /* background-color: var(--background-color); */
     border: 2px solid var(--background-color);
-    /* border: 2px solid #8b4512; */
   }
 
   h2 {

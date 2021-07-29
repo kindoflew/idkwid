@@ -95,11 +95,6 @@
   }
 
   a:hover {
-    /* color: var(--accent-color); */
     text-decoration: underline;
   }
-
-  /* a {
-    color: var(--text-light);
-  } */
 </style>

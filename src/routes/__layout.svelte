@@ -31,7 +31,6 @@
     max-width: 46rem;
     margin: 0 auto;
     border-radius: 5px;
-    /* border: 2px solid #8b4512; */
     box-sizing: border-box;
     background-color: #fff6e5;
   }
