@@ -1,3 +1,4 @@
+// learned how to do all this from c-bandy: https://github.com/c-bandy/website/blob/main/mdsvex.config.js
 import urls from 'rehype-urls';
 import slug from 'rehype-slug';
 import autolinkHeadings from 'rehype-autolink-headings';
