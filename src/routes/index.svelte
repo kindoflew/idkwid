@@ -56,12 +56,13 @@
 
   .date {
     font-size: 0.9rem;
-    margin: 0.5rem 0 0.2rem;
+    margin: 0 0 0.2rem;
     color: #6b6b6b;
   }
 
   .summary {
     margin-bottom: 0;
     font-size: 1rem;
+    line-height: 1.5;
   }
 </style>

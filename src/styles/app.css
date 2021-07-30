@@ -15,8 +15,6 @@
   --background-color: #a2cfa2;
   --background-light: #fff6e5;
   --border-color: #8b4512;
-
-  --margin-small: 1.5rem;
 }
 
 body {
@@ -45,18 +43,20 @@ p {
 }
 
 h2 {
-  font-size: 1.75rem;
-  margin: 0 0 1rem 0;
+  font-size: 2rem;
 }
 
 h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  
 }
 
 p {
-  line-height: 1.5;
-  font-size: 1.1rem;
-  margin: 0 0 var(--margin-small) 0;
+  line-height: 1.8;
+  font-size: 1rem;
+  margin: 0 0 1.5rem 0;
 }
 
 a,

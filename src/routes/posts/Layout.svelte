@@ -34,7 +34,8 @@
 
 <style>
   h2 {
-    margin-bottom: 0;
+    margin-bottom: 0.3rem;
+    font-size: 2rem;
   }
 
   p {
