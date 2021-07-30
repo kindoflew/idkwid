@@ -1,6 +1,5 @@
 <script>
   import { page } from '$app/stores';
-  import '@fontsource/anton';
 </script>
 
 <header>
