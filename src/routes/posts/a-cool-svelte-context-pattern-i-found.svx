@@ -1,0 +1,149 @@
+---
+title: A cool Svelte Context pattern I found
+date: 2021-07-30T00:00:00
+summary: Learning stuff by borrowing from smarter people (Not me, I'm the one learning — in this case the smarter people are IBM).
+---
+
+A few months ago, I virtually attended [Svelte Summit](https://sveltesummit.com/) and one of my favorite talks was [Untangling Composition and Higher Order Components](https://youtu.be/fnr9XWvjJHw?t=3472) by [Isaac Hagoal](https://twitter.com/isaac_hagoel). The techniques discussed are great for publishing your own components and you should definitely check it out (and the whole Summit actually). However, there was a pattern I came across recently that wasn't mentioned in the talk, so I figured I'd write about it. If you don't want the *context* (pun!), you can skip to [the actual code](#the-actual-code).
+
+### Great artists steal
+
+There are a lot of tutorials, courses, and blog posts dealing with the basics of languages/frameworks. But when it comes to next steps and more "philosophical" coding topics (architecture, design, patterns, etc) there seems to be a little bit of a drought. So, I've taken to finding real world examples of smart people who are already doing the things I'm looking for. One such example is IBM's carbon-components library (and for me specifically, [carbon-components-svelte](https://github.com/IBM/carbon-components-svelte)). The components themselves are great, but the real value I found was digging into the source code and learning new patterns for component composition.
+
+### My project
+
+Shortly before the Summit, I decided to write a package and publish it on `npm` -- mostly because it was something I had never done before and I like learning by doing. To avoid scrutiny, I settled on writing a parallax effect component for Svelte (parallax seems to be frowned upon these days so I figured no one would notice if I ended up publishing garbage 😅). 
+
+The basic design: a parent component that took some global config props and a child component that could be nested inside the parent -- using a mix of the parent's props and its own props for animation. There could be any number of children nested inside the parent. It eventually looked something like this (abridged for clarity):
+
+```svelte
+<!-- Parent.svelte -->
+<script>
+  // props to be passed in
+  export let config;
+  export let cancel; // to cancel animation -- for a11y!
+
+  // and some variables to keep track of scrolling
+  let scrollY; // bind:scrollY
+  let innerHeight; // bind:innerHeight
+</script>
+
+...
+
+<div>
+  <!-- child components go here -->
+  <slot />
+</div>
+```
+
+Functions in the `Child` components need those props and local vars. 
+
+I should also mention that I had a (self-imposed) restriction in that I wanted to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). Mostly because I wanted as little set up for the user as possible -- if they happened to want a large number of `Child` components, they would end up manually passing the `Parent` props down many times. And that could open them up to bugs or unexpected behavior. 
+
+In order to "hide" this prop passing, I reached for `context`. But `context` isn't reactive by default, so I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
+
+```svelte
+<!-- Parent.svelte -->
+<script>
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
+  
+  export let config;
+  export let cancel;
+
+  const _config = writable(config);
+  $: $_config = config;
+
+  const _cancel = writable(cancel);
+  $: $_cancel = cancel;
+
+  const scrollY = writable(0);
+  const innerHeight = writable(0);
+
+  setContext('contextKey', {
+    _config,
+    _cancel,
+    scrollY,
+    innerHeight
+  });
+</script>
+```
+
+And that seemed...ok, I guess? It worked, but I thought it was kind of ugly (in the actual code there were many more props and local vars). I had a bunch of unnecessary stores and redeclared variables prefixed with underscores -- it didn't seem sustainable if I wanted to expand the component significantly in the future.
+
+But then I remembered a cool pattern I had come across in the IBM component library. It goes a little something like this: instead of passing all those props and vars *down* to the children, you pass functions that take them as arguments *up* to the parent. Rad!
+
+### The actual code!
+
+First we set up our `context` and an array to hold the children and their functions:
+
+```svelte
+<!-- Parent.svelte -->
+<script>
+  import { setContext } from 'svelte';
+
+  export let config;
+  export let cancel;
+
+  let scrollY;
+  let innerHeight;
+
+  // eventually full of Child objects with methods
+  let children = [];
+
+  // methods for Child to add/remove itself from `children`
+  setContext('contextKey', {
+    add: (child) => {
+      children = [...children, child];
+    },
+    remove: (child) => {
+      children = children.filter(c => c !== child);
+    }
+  });
+</script>
+```
+
+Then, in `Child.svelte` we grab the `context`, set up a function, and call `add` in `onMount`:
+
+```svelte
+<!-- Child.svelte -->
+<script>
+  import { onMount, getContext } from 'svelte';
+
+  // grab context
+  const { add, remove } = getContext('contextKey');
+
+  // Child object with cool method
+  const child = {
+    func: (scrollY, innerHeight, cancel) => {
+      // eventually do stuff with those values
+    }
+  };
+
+  onMount(() => {
+    // add it to the array in Parent
+    add(child);
+
+    return () => {
+      // clean up!
+      remove(child);
+    }
+  });
+</script>
+```
+
+And then use it in `Parent.svelte`:
+
+```javascript
+$: children.forEach(child => {
+     child.func(scrollY, innerHeight, cancel));
+   });
+```
+
+Now, whenever those props and vars change in `Parent`, those methods will be re-run and the changes will be reflected in `Child`! There's a lot less noise and it's still pretty clear what's going on. 
+
+Another cool side-effect of this pattern is that the parent component can get all kinds of information about children (for example, you can get `children.length` -- can't do that with `$$slots`).
+
+Even if you don't use it in your projects, I highly recommend checking out IBM's Svelte component library -- there are so many cool ideas and patterns to be found. And why struggle through problems when smarter people already beat us to it? (*Something, something, reinvented wheels.*)
+
+And if you want to see this pattern in action, you can check out my actual project here -- [svelte-parallax](https://github.com/kindoflew/svelte-parallax).  
