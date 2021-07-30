@@ -6,7 +6,7 @@
 
 <footer>
   <p>
-    Copyright @kindoflew {year}
+    Copyleft {year} @kindoflew
   </p>
 </footer>
 
