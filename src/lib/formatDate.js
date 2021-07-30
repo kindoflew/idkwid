@@ -5,7 +5,10 @@ export function formatDate(postDate) {
     month: "short",
     day: "numeric",
   };
-  if (date.year < new Date().getFullYear) {
+
+  let postYear = date.getFullYear();
+  let thisYear = new Date().getFullYear(); 
+  if (postYear < thisYear) {
     options.year = "numeric";
   }
 
