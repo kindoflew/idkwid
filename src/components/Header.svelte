@@ -94,7 +94,15 @@
     transition: color 0.2s linear;
   }
 
-  a:hover {
+  nav a:hover {
     text-decoration: underline;
+  }
+
+  p a {
+    text-decoration: underline;
+  }
+
+  p a:hover {
+    text-decoration: none;
   }
 </style>
