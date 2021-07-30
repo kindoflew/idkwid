@@ -6,6 +6,9 @@
   <p>
     Copyleft {year} @kindoflew
   </p>
+  <p>
+    ¯\_(ツ)_/¯
+  </p>
 </footer>
 
 <style>
