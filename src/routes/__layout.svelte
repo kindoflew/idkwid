@@ -1,8 +1,4 @@
-<!-- <script context="module">
-  import { page } from '$app/stores';
-</script> -->
 <script>
-  import { fade } from 'svelte/transition';
   import Header from '$components/Header.svelte';
   import Footer from '$components/Footer.svelte';
   import 'normalize.css';
@@ -11,11 +7,7 @@
 
 <Header />
 <main>
-  <!-- {#key $page}
-    <div in:fade> -->
-      <slot />
-    <!-- </div> 
-  {/key} -->
+  <slot />
 </main>
 <Footer />
 
