@@ -1,7 +1,6 @@
 <script context="module">
   export const load = async function ({ fetch }) {
-    const url = '/posts.json';
-    const res = await fetch(url);
+    const res = await fetch('/index.json');
     if (res.ok) {
       const { posts } = await res.json();
       return {
@@ -10,7 +9,7 @@
     } else {
       return {
         status: 500,
-        error: new Error(`Could not fetch ${url}`)
+        error: new Error(`Could not fetch posts`)
       };
     }
   };
