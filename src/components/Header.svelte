@@ -71,6 +71,10 @@
     height: 100%;
   }
 
+  li:not(:last-of-type) {
+    border-right: 1px solid lightgrey;
+  }
+
   /* li.active::before {
     --size: 6px;
     content: '';
