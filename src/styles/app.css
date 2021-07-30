@@ -3,18 +3,20 @@
 @import '@fontsource/fira-mono';
 
 :root {
-  font-family: 'Roboto', sans-serif;
   --font-heading: 'Anton', sans-serif;
   --font-mono: 'Fira Mono', monospace;
 
   --heading-color: rgba(0, 0, 0, 0.7);
   --text-color: #444444;
   --text-light: #fff5dc;
-  color: var(--text-color);
+  
   /* --background-color: #fdd5db; */
   --background-color: #a2cfa2;
   --background-light: #fff6e5;
   --border-color: #8b4512;
+
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);
 }
 
 body {
@@ -54,8 +56,7 @@ h3 {
 }
 
 p {
-  line-height: 1.8;
-  font-size: 1rem;
+  line-height: 1.6;
   margin: 0 0 1.5rem 0;
 }
 
@@ -69,6 +70,6 @@ a:hover {
   text-decoration: underline;
 }
 
-button:focus:not(:focus-visible) {
+a:focus:not(:focus-visible) {
   outline: none;
 }
