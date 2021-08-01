@@ -4,6 +4,12 @@
 
 <footer>
   <p>
+    Built with 
+      <a href="https://kit.svelte.dev/" rel="noopener noreferrer">SvelteKit</a> 
+      and 
+      <a href="https://mdsvex.pngwn.io/" rel="noopener noreferrer">MDsveX</a>
+  </p>
+  <p>
     Copyleft {year} @kindoflew
   </p>
   <p>
@@ -23,5 +29,13 @@
   p {
     margin: 0;
     font-size: 0.9rem;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  a:hover {
+    text-decoration: none;
   }
 </style>
