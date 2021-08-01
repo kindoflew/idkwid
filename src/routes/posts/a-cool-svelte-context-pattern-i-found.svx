@@ -12,9 +12,9 @@ There are a lot of tutorials, courses, and blog posts dealing with the basics of
 
 ### My project
 
-Shortly before the Summit, I decided to write a package and publish it on `npm` -- mostly because it was something I had never done before and I like learning by doing. To avoid scrutiny, I settled on writing a parallax effect component for Svelte (parallax seems to be frowned upon these days so I figured no one would notice if I ended up publishing garbage 😅). 
+Shortly before the Summit, I decided to write a package and publish it on `npm` -- it was something I had never done before and I like learning by doing. To avoid scrutiny, I settled on writing a parallax effect component for Svelte (parallax seems to be frowned upon these days so I figured no one would notice if I ended up publishing garbage 😅). 
 
-The basic design: a parent component that took some global config props and a child component that could be nested inside the parent -- using a mix of the parent's props and its own props for animation. There could be any number of children nested inside the parent. It eventually looked something like this (abridged for clarity):
+The basic design: a parent component that took some global config props and a child component that could be nested inside the parent -- using a mix of the parent's props and its own props for animation. There could be any number of children nested inside the parent. It eventually looked something like this (very abridged for clarity):
 
 ```svelte
 <!-- Parent.svelte -->
@@ -23,7 +23,7 @@ The basic design: a parent component that took some global config props and a ch
   export let config;
   export let cancel; // to cancel animation -- for a11y!
 
-  // and some variables to keep track of scrolling
+  // and some local variables
   let scrollY; // bind:scrollY
   let innerHeight; // bind:innerHeight
 </script>
@@ -36,9 +36,9 @@ The basic design: a parent component that took some global config props and a ch
 </div>
 ```
 
-Functions in the `Child` components need those props and local vars. 
+The `Child` component contains functions that need those props and local vars. 
 
-I should also mention that I had a (self-imposed) restriction in that I wanted to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). Mostly because I wanted as little set up for the user as possible -- if they happened to want a large number of `Child` components, they would end up manually passing the `Parent` props down many times. And that could open them up to bugs or unexpected behavior. 
+(I should also mention that I had a (self-imposed) restriction to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). I wanted as little set-up for the user as possible and if they happened to want a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior.) 
 
 In order to "hide" this prop passing, I reached for `context`. But `context` isn't reactive by default, so I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
 
@@ -113,7 +113,7 @@ Then, in `Child.svelte` we grab the `context`, set up a function, and call `add`
   // grab context
   const { add, remove } = getContext('contextKey');
 
-  // Child object with cool method
+  // Child object with fancy method
   const child = {
     func: (scrollY, innerHeight, cancel) => {
       // eventually do stuff with those values
