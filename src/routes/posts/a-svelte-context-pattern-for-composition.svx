@@ -1,6 +1,6 @@
 ---
 title: A Svelte Context pattern for composition
-date: 2021-07-30T00:00:00
+date: 2021-08-02T00:00:00
 summary: Learning stuff by borrowing from smarter people (Not me, I'm the one learning — in this case the smarter people are IBM).
 ---
 
