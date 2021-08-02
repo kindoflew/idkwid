@@ -6,7 +6,6 @@
   --font-heading: 'Anton', sans-serif;
   --font-mono: 'Fira Mono', monospace;
 
-  --heading-color: rgba(0, 0, 0, 0.7);
   --text-color: #444444;
   --text-light: #fff5dc;
   
@@ -41,7 +40,7 @@ h3 {
 h1,
 h2,
 p {
-  color: var(--heading-color);
+  color: var(--text-color);
 }
 
 h2 {
@@ -49,20 +48,19 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  
+  font-size: 1.75rem;
+  margin-top: 2.75rem;
+  margin-bottom: 1.75rem;
 }
 
 p {
-  line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+  line-height: 1.7;
+  margin: 0 0 1.75rem 0;
 }
 
 a,
 a:visited {
-  color: var(--heading-color);
+  color: var(--text-color);
   text-decoration: none;
 }
 
