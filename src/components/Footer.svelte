@@ -5,9 +5,13 @@
 <footer>
   <p>
     Built with 
-      <a href="https://kit.svelte.dev/" rel="noopener noreferrer">SvelteKit</a> 
+      <a href="https://kit.svelte.dev/" target="_blank" rel="noopener noreferrer">
+        SvelteKit
+      </a> 
       and 
-      <a href="https://mdsvex.pngwn.io/" rel="noopener noreferrer">MDsveX</a>
+      <a href="https://mdsvex.pngwn.io/" target="_blank" rel="noopener noreferrer">
+        MDsveX
+      </a>
   </p>
   <p>
     Copyleft {year} @kindoflew

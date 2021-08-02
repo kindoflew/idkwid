@@ -9,6 +9,7 @@
       a blog about web development by 
       <a
         href="https://twitter.com/kindoflew"
+        target="_blank"
         rel="noreferrer noopener"
       >
         @kindoflew
