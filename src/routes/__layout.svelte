@@ -24,7 +24,7 @@
     margin: 0 auto;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #fff6e5;
+    background-color: var(--background-light);
   }
 
   @media (max-width: 620px) {

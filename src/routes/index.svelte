@@ -55,7 +55,7 @@
   .date {
     font-size: 0.9rem;
     margin: 0.2rem 0;
-    color: #6b6b6b;
+    color: var(--text-gray);
   }
 
   .summary {
