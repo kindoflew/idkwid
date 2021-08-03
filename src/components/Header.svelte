@@ -93,7 +93,7 @@
     height: 100%;
     align-items: center;
     padding: 0 1em;
-    color: var(--heading-color);
+    color: var(--text-color);
     text-decoration: none;
     transition: color 0.2s linear;
   }
