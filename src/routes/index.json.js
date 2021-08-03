@@ -1,6 +1,5 @@
 // Learned this from babichjacob: https://github.com/babichjacob/university-website/blob/main/src/routes/blog/index.json.ts
 // and c-bandy: https://github.com/babichjacob/university-website/blob/main/src/routes/blog/index.json.ts
-// who I think learned it from babichjacob in the first place 
 import { basename } from 'path';
 
 export async function get() {
