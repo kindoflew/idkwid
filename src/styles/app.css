@@ -6,16 +6,26 @@
   --font-heading: 'Anton', sans-serif;
   --font-mono: 'Fira Mono', monospace;
 
-  --text-color: #444444;
+  --text-color: #464646;
   --text-light: #fff5dc;
+  --text-gray: #6b6b6b;
   
-  /* --background-color: #fdd5db; */
-  --background-color: #a2cfa2;
+  --background-color: #fdd5db;
+  /* --background-color: #a2cfa2; */
   --background-light: #fff6e5;
   --border-color: #8b4512;
 
   font-family: 'Roboto', sans-serif;
   color: var(--text-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #fff8db;
+    --text-gray: #9c9c9c;
+    --background-color: #1d2021;
+    --background-light: #303030;
+  }
 }
 
 body {
