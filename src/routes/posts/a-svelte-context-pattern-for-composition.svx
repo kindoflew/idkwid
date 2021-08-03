@@ -4,11 +4,15 @@ date: 2021-08-02T00:00:00
 summary: Learning stuff by borrowing from smarter people (Not me, I'm the one learning — in this case the smarter people are IBM).
 ---
 
-A few months ago, I virtually attended [Svelte Summit](https://sveltesummit.com/) and one of my favorite talks was [Untangling Composition and Higher Order Components](https://youtu.be/fnr9XWvjJHw?t=3472) by [Isaac Hagoal](https://twitter.com/isaac_hagoel). The techniques discussed are great for publishing your own components and you should definitely check it out (and the whole Summit actually). However, there was a pattern I learned recently that wasn't mentioned in the talk, so I figured I'd write about it. If you don't want the *context* (pun!), you can skip to [the actual code](#the-actual-code).
+One of my favorite talks at this year's [Svelte Summit](https://sveltesummit.com/) was [Untangling Composition and Higher Order Components](https://youtu.be/fnr9XWvjJHw?t=3472) by [Isaac Hagoal](https://twitter.com/isaac_hagoel). The techniques discussed are great for publishing your own components and you should definitely check it out (and the whole Summit, for that matter). 
+
+However, there was a pattern I learned recently that wasn't mentioned in the talk, so I figured I'd write about it. If you don't want the *context* (pun!), you can skip to [the actual code](#the-actual-code).
 
 ### Great artists steal
 
-There are a lot of tutorials, courses, and blog posts dealing with the basics of languages/frameworks. But when it comes to next steps and more "philosophical" coding topics (architecture, design, patterns, etc) there seems to be a little bit of a drought. So, I've taken to finding real world examples of smart people who are already doing the things I'm looking for. One such example is IBM's carbon-components library (and for me specifically, [carbon-components-svelte](https://github.com/IBM/carbon-components-svelte)). The components themselves are great, but the real value I found was digging into the source code and learning new patterns for component composition.
+There are a lot of tutorials, courses, and blog posts dealing with the basics of languages/frameworks. But when it comes to next steps and more "philosophical" coding topics (architecture, design, patterns, etc) there seems to be a little bit of a drought. So, I've taken to finding real world examples of smart people who are already doing the things I'm looking for. 
+
+One such example is IBM's carbon-components library (and for me specifically, [carbon-components-svelte](https://github.com/IBM/carbon-components-svelte)). The components themselves are great, but the real value I found was digging into the source code and learning new patterns for component composition.
 
 ### Why I needed a pattern
 
@@ -36,7 +40,9 @@ The basic design: a parent component that takes some global config props and a c
 </div>
 ```
 
-The `Child` component contains functions that need those props and local vars but, I had a (self-imposed) restriction -- to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). I wanted as little set-up for the user as possible and if they happened to want a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior. 
+The `Child` component contains functions that need those props and local vars, but I had a (self-imposed) restriction -- to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). 
+
+I wanted as little set-up for the user as possible and if they happened to want a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior. 
 
 In order to "hide" this prop passing, I reached for `context`. But `context` isn't reactive by default, so I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
 
@@ -141,15 +147,15 @@ $: children.forEach(child => {
    });
 ```
 
-Now, whenever those props and vars change in `Parent`, those methods will be re-run and the changes will be reflected in `Child`! There's a lot less noise and it's still pretty clear what's going on. 
+Now, whenever the props and vars change in `Parent`, those methods will be re-run and the changes will be reflected in `Child`! There's less visual noise and it's still pretty clear what's going on. 
 
 Another cool side-effect of this pattern is that the parent component can get all kinds of information about children (for example, you can get `children.length` -- can't do that with `$$slots`). You can also add meta info to the `Child` object:
 
 ```javascript
 const child = {
-  name: 'Child #1',
-  type: 'Some type',
-  props: ['array', 'of', 'props'],
+  name: `${nameProp}`,
+  type: `${typeProp}`,
+  props: ['some', 'other', 'props'],
   func: (scrollY, innerHeight, cancel) => {
     // do stuff!
   }
