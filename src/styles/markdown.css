@@ -62,3 +62,7 @@ tr:nth-child(2n) {
   content: '↗';
   font-size: 0.9rem;
 } */
+
+.md-list > li {
+  margin-bottom: 0.5rem;
+}

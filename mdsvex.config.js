@@ -2,6 +2,7 @@
 import urls from 'rehype-urls';
 import slug from 'rehype-slug';
 import autolinkHeadings from 'rehype-autolink-headings';
+import addClasses from 'rehype-add-classes';
 
 function processUrl(url, node) {
   if (node.tagName === 'a') {
@@ -28,7 +29,8 @@ const config = {
   rehypePlugins: [
     [urls, processUrl],
     slug,
-    [autolinkHeadings, {behavior: 'wrap'}]
+    [autolinkHeadings, {behavior: 'wrap'}],
+    [addClasses, { 'ul': 'md-list' }]
   ]
 };
 
