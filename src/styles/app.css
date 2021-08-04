@@ -39,13 +39,6 @@ h3 {
   font-weight: 400;
 }
 
-/* h1,
-h2,
-h3,
-p {
-  color: var(--text-color);
-} */
-
 h2 {
   font-size: 1.9rem;
   line-height: 1.3;
@@ -88,11 +81,6 @@ a:focus:not(:focus-visible) {
     --background-light: #272c28;
   }
 
-  /* h2,
-  h2 > a,
-  h2 > a:visited {
-    color: #63e663;
-  } */
   a:hover {
     color: #5aeb7e;
     color: var(--primary-color);
