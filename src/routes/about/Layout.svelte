@@ -7,7 +7,7 @@
 </svelte:head>
 
 <article>
-  <h2>About</h2>
+  <h2>A little bit about me and this blog</h2>
   <slot />
 </article>
 
