@@ -1,12 +1,14 @@
 ---
-title: A Svelte Context pattern for composition
+title: Using Svelte Context to commmunicate between parent and child components 
 date: 2021-08-02T00:00:00
 summary: Learning stuff by borrowing from smarter people (Not me, I'm the one learning — in this case the smarter people are IBM).
 ---
 
 One of my favorite talks at this year's [Svelte Summit](https://sveltesummit.com/) was [Untangling Composition and Higher Order Components](https://youtu.be/fnr9XWvjJHw?t=3472) by [Isaac Hagoal](https://twitter.com/isaac_hagoel). The techniques discussed are great for publishing your own components and you should definitely check it out (and the whole Summit, for that matter). 
 
-However, there was a pattern I learned recently that wasn't mentioned in the talk, so I figured I'd write about it. If you don't want the *context* (pun!), you can skip to [the actual code](#the-actual-code).
+However, there was a pattern I learned recently that wasn't mentioned in the talk, so I figured I'd write about it. If you don't want the *context* (pun!), you can skip to [the actual code](#the-actual-code). 
+
+*This article assumes a basic understanding of Svelte's [Context API](https://svelte.dev/docs#setContext) and [slots](https://svelte.dev/docs#slot).*
 
 ### Great artists steal
 
@@ -18,7 +20,7 @@ One such example is IBM's carbon-components library (and for me specifically, [c
 
 Shortly before the Summit, I decided to write a package and publish it on `npm` -- it was something I had never done before and I like learning by doing. To avoid scrutiny, I settled on writing a parallax effect component for Svelte (parallax seems to be frowned upon these days so I figured no one would notice if I ended up publishing garbage 😅). 
 
-The basic design: a parent component that takes some global config props and a child component that could be nested inside the parent. The child component uses a mix of the parent's props and its own props for animation. There can be any number of children nested inside the parent. It eventually looked something like this (very, very abridged for clarity):
+The basic design: a parent component that takes some global config props and a child component that could be nested inside the parent. The child component uses a mix of the parent's props and its own props for animation. There can be any number of children nested inside the parent. The `Parent` eventually looked something like this (very, very abridged for clarity):
 
 ```svelte
 <!-- Parent.svelte -->
@@ -42,7 +44,7 @@ The basic design: a parent component that takes some global config props and a c
 
 The `Child` component contains functions that need those props and local vars, but I had a (self-imposed) restriction -- to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). 
 
-I wanted as little set-up for the user as possible and if they happened to want a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior. 
+I wanted as little boilerplate as possible and if the user wanted a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior. 
 
 In order to "hide" this prop passing, I reached for `context`. But `context` isn't reactive by default, so I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
 
@@ -76,13 +78,13 @@ In order to "hide" this prop passing, I reached for `context`. But `context` isn
 </script>
 ```
 
-And that seemed...ok, I guess? It worked, but I thought it was kind of ugly (in the actual code there were many more props and local vars). I had a bunch of unnecessary stores and redeclared variables prefixed with underscores -- it didn't seem sustainable if I wanted to expand the component significantly in the future.
+And that seemed...ok, I guess? It worked, but I thought it was kind of ugly (in the actual code there were a lot more props and local vars). I had a bunch of unnecessary stores and redeclared variables prefixed with underscores -- it got pretty tedious whenever I wanted to change something.
 
 But then I remembered a cool pattern I had come across in the IBM component library. It goes a little something like this: instead of passing all those props and vars *down* to the children, you pass functions that take them as arguments *up* to the parent. Rad!
 
 ### The actual code!
 
-First we set up our `context` and an array to hold the children and their functions. The `context` contains two methods -- one for adding a `Child` and one for removing it:
+First we set up our `context` and an array to hold the children and their methods. The `context` itself contains two methods -- one for adding a `Child` and one for removing it:
 
 ```svelte
 <!-- Parent.svelte -->
@@ -110,7 +112,7 @@ First we set up our `context` and an array to hold the children and their functi
 </script>
 ```
 
-Then, in `Child.svelte` we grab the `context`, set up a function, and call `add` in `onMount`:
+Then, in `Child.svelte` we grab the `context`, set up our object, and call `add` in `onMount`:
 
 ```svelte
 <!-- Child.svelte -->
@@ -162,6 +164,6 @@ const child = {
 }
 ```
 
-So, even if you don't use the components in your projects, I highly recommend checking out IBM's [carbon-components-svelte](https://github.com/IBM/carbon-components-svelte) -- there are so many cool ideas and patterns to be found. Why struggle through problems when smarter people already beat us to it? (*Something, something, reinvented wheels.*)
+So, even if you don't use the components in your projects, I highly recommend checking out IBM's [carbon-components-svelte](https://github.com/IBM/carbon-components-svelte) -- there are so many neat ideas and patterns to be found. And why struggle through problems when smarter people already beat us to it? (*Something, something, reinvented wheels.*)
 
-And if you want to see this pattern in action, you can check out my actual project here -- [svelte-parallax](https://github.com/kindoflew/svelte-parallax).  
+*If you want to see this pattern in action, you can check out my actual project here -- [svelte-parallax](https://github.com/kindoflew/svelte-parallax).*
