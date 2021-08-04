@@ -41,7 +41,7 @@
     padding: 1rem;
     margin-bottom: 1.5rem;
     border-radius: 5px;
-    border: 2px solid var(--background-color);
+    border: 2px solid var(--border-color);
   }
 
   div:last-of-type {

@@ -3,6 +3,7 @@
 @import '@fontsource/fira-mono';
 
 :root {
+  --primary-color: #a2cfa2;
   --font-heading: 'Anton', sans-serif;
   --font-mono: 'Fira Mono', monospace;
 
@@ -11,21 +12,12 @@
   --text-gray: #6b6b6b;
   
   /* --background-color: #fdd5db; */
-  --background-color: #a2cfa2;
+  --background-color: var(--primary-color);
   --background-light: #fff6e5;
-  --border-color: #8b4512;
+  --border-color: var(--primary-color);
 
   font-family: 'Roboto', sans-serif;
   color: var(--text-color);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #fff8db;
-    --text-gray: #9c9c9c;
-    --background-color: #1d2021;
-    --background-light: #303030;
-  }
 }
 
 body {
@@ -47,11 +39,12 @@ h3 {
   font-weight: 400;
 }
 
-h1,
+/* h1,
 h2,
+h3,
 p {
   color: var(--text-color);
-}
+} */
 
 h2 {
   font-size: 1.9rem;
@@ -81,4 +74,27 @@ a:hover {
 
 a:focus:not(:focus-visible) {
   outline: none;
+}
+
+/* Dark mode */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-color: #5aeb7e;
+    --text-color: #fff8db;
+    --text-gray: #9c9c9c;
+
+    --background-color: #1d2021;
+    --background-light: #272c28;
+  }
+
+  /* h2,
+  h2 > a,
+  h2 > a:visited {
+    color: #63e663;
+  } */
+  a:hover {
+    color: #5aeb7e;
+    color: var(--primary-color);
+  }
 }

@@ -66,3 +66,9 @@ tr:nth-child(2n) {
 .md-list > li {
   margin-bottom: 0.5rem;
 }
+
+@media (prefers-color-scheme: dark) {
+  h3 a[href*='#']::before {
+    color: var(--primary-color);
+  }
+}
