@@ -91,7 +91,6 @@
     padding: 0 1em;
     color: var(--text-color);
     text-decoration: none;
-    transition: color 0.2s linear;
   }
 
   nav a:hover {
@@ -104,5 +103,11 @@
 
   p > a:hover {
     text-decoration: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    nav a:hover {
+    color: var(--primary-color);
+  }
   }
 </style>
