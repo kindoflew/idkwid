@@ -1,5 +1,5 @@
 ---
-title: Using Svelte Context to commmunicate between parent and child components 
+title: Using Svelte Context to communicate between parent and child components 
 date: 2021-08-02T00:00:00
 summary: Learning stuff by borrowing from smarter people (Not me, I'm the one learning — in this case the smarter people are IBM).
 ---
@@ -46,7 +46,31 @@ The `Child` component contains functions that need those props and local vars, b
 
 I wanted as little boilerplate as possible and if the user wanted a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior. 
 
-In order to "hide" this prop passing, I reached for `context`. But `context` isn't reactive by default, so I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
+In order to "hide" this prop passing, I reached for `context`: 
+
+```svelte
+<!-- Parent.svelte -->
+<script>
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
+  
+  export let config;
+  export let cancel;
+
+  const scrollY;
+  const innerHeight;
+
+  // these will be available to any components nested in `Parent`
+  setContext('contextKey', {
+    config,
+    cancel,
+    scrollY,
+    innerHeight
+  });
+</script>
+```
+
+And that would work if none of those values were going to change. But, in my case, they were going to change often and `context` isn't reactive by default. So, I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
 
 ```svelte
 <!-- Parent.svelte -->
@@ -80,7 +104,7 @@ In order to "hide" this prop passing, I reached for `context`. But `context` isn
 
 And that seemed...ok, I guess? It worked, but I thought it was kind of ugly (in the actual code there were a lot more props and local vars). I had a bunch of unnecessary stores and redeclared variables prefixed with underscores -- it got pretty tedious whenever I wanted to change something.
 
-But then I remembered a cool pattern I had come across in the IBM component library. It goes a little something like this: instead of passing all those props and vars *down* to the children, you pass functions that take them as arguments *up* to the parent. Rad!
+But then I remembered a cool pattern I had come across in the IBM component library. It goes a little something like this: **instead of passing all those props and vars *down* to the children, you pass functions that take them as arguments *up* to the parent**. Rad!
 
 ### The actual code!
 
@@ -97,7 +121,7 @@ First we set up our `context` and an array to hold the children and their method
   let scrollY;
   let innerHeight;
 
-  // eventually full of Child objects with methods
+  // eventually full of `Child` objects with methods
   let children = [];
 
   // methods for Child to add/remove itself from `children`
@@ -130,7 +154,7 @@ Then, in `Child.svelte` we grab the `context`, set up our object, and call `add`
   };
 
   onMount(() => {
-    // add it to the array in Parent
+    // add it to the array in `Parent`
     add(child);
 
     return () => {
@@ -149,14 +173,27 @@ $: children.forEach(child => {
    });
 ```
 
-Now, whenever the props and vars change in `Parent`, those methods will be re-run and the changes will be reflected in `Child`! There's less visual noise and it's still pretty clear what's going on. 
+Now, whenever the props and vars change in `Parent` (including `children`), those methods will be re-run and the changes will be reflected in `Child`! There's less visual noise and it's still pretty clear what's going on.
+
+To run the methods *only* when the props/vars change, you can "hide" `children` from the reactive statement by moving the `forEach` into it's own function:
+
+```javascript
+$: runAll(scrollY, innerHeight, cancel);
+
+function runAll(scrollY, innerHeight, cancel) {
+  // "hide" `children` from reactive statement
+  children.forEach(child => {
+    child.func(scrollY, innerHeight, cancel);
+  });
+}
+```
 
 Another cool side-effect of this pattern is that the parent component can get all kinds of information about children (for example, you can get `children.length` -- can't do that with `$$slots`). You can also add meta info to the `Child` object:
 
 ```javascript
 const child = {
-  name: `${nameProp}`,
-  type: `${typeProp}`,
+  name: nameProp,
+  type: typeProp,
   props: ['some', 'other', 'props'],
   func: (scrollY, innerHeight, cancel) => {
     // do stuff!
@@ -166,4 +203,4 @@ const child = {
 
 So, even if you don't use the components in your projects, I highly recommend checking out IBM's [carbon-components-svelte](https://github.com/IBM/carbon-components-svelte) -- there are so many neat ideas and patterns to be found. And why struggle through problems when smarter people already beat us to it? (*Something, something, reinvented wheels.*)
 
-*If you want to see this pattern in action, you can check out my actual project here -- [svelte-parallax](https://github.com/kindoflew/svelte-parallax).*
+*If you'd like to mess around with this pattern, I made a little [REPL example](https://svelte.dev/repl/041d9d959a2e4cbc8c3a2519724df472?version=3.42.1) that you can play with. And if you want to see it in action, you can check out my actual project here -- [svelte-parallax](https://github.com/kindoflew/svelte-parallax).*
