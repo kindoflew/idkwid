@@ -56,7 +56,7 @@ In Svelte, we have the [let directive](https://svelte.dev/tutorial/slot-props) t
 </Parent>
 ```
 
-But I wanted to avoid it for a few reasons. First, it seemed too "noisy" -- I wanted a simple, clean API which, for me, meant only passing props down -- without any boilerplate. One of the reasons devs use component libraries is to abstract away all the set up.
+But I wanted to avoid it for a few reasons. First, it seemed too "noisy" -- I wanted a simple, clean API which, for me, meant only passing props down -- without any boilerplate. One of the main reasons devs use component libraries is to abstract away all of the set up.
 
 Second, if a user wanted to have a lot of `Child` components, they would need to pass down just as many `Parent` props. All that repitition could lead to forgetting to pass them, which could lead to bugs and frustration.
 

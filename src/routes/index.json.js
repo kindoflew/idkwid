@@ -3,7 +3,7 @@
 import { basename } from 'path';
 
 export async function get() {
-  const modules = Object.entries(import.meta.glob('./posts/*.svx'));
+  const modules = Object.entries(import.meta.glob('./posts/*.md'));
 
   const posts = [];
 
@@ -12,7 +12,7 @@ export async function get() {
 
       posts.push({
         ...metadata,
-        slug: basename(file, ".svx"),
+        slug: basename(file, ".md"),
       });
     })
   );
