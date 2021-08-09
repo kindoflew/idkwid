@@ -29,9 +29,8 @@ The basic design: a parent component that takes some global config props and a c
   export let config;
   export let cancel; // to cancel animation -- for a11y!
 
-  // and some local variables
+  // a local variable that changes often
   let scrollY; // bind:scrollY
-  let innerHeight; // bind:innerHeight
 </script>
 
 ...
@@ -42,9 +41,9 @@ The basic design: a parent component that takes some global config props and a c
 </div>
 ```
 
-The `Child` component contains functions that need those props and local vars, but I had a (self-imposed) restriction -- to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). 
+The `Child` component contains functions that need the props and local variable, but I had a (self-imposed) restriction -- to avoid using the [`let` directive](https://svelte.dev/tutorial/slot-props). 
 
-I wanted as little boilerplate as possible and if the user wanted a large number of `Child` components, they would end up manually passing down the `Parent` props many times. And that could open them up to bugs or unexpected behavior. 
+I wanted as little boilerplate as possible -- what if the user wanted a large number of `Child` components? They would have to manually pass down the `Parent` props many times and that could open them up to bugs or unexpected behavior. 
 
 In order to "hide" this prop passing, I reached for `context`: 
 
@@ -57,20 +56,18 @@ In order to "hide" this prop passing, I reached for `context`:
   export let config;
   export let cancel;
 
-  const scrollY;
-  const innerHeight;
+  let scrollY;
 
   // these will be available to any components nested in `Parent`
   setContext('contextKey', {
     config,
     cancel,
-    scrollY,
-    innerHeight
+    scrollY
   });
 </script>
 ```
 
-And that would work if none of those values were going to change. But, in my case, they were going to change often and `context` isn't reactive by default. So, I had to make my `Parent` vars (and props) into stores so they could change in `Child` as well:
+And that would work if none of those values were going to change. But, in my case, they were going to change often and `context` isn't reactive by default. So, I had to make my `Parent` props and variables into stores so they could change in `Child` as well:
 
 ```svelte
 <!-- Parent.svelte -->
@@ -91,20 +88,18 @@ And that would work if none of those values were going to change. But, in my cas
   $: $_cancel = cancel;
 
   const scrollY = writable(0);
-  const innerHeight = writable(0);
 
   setContext('contextKey', {
     _config,
     _cancel,
-    scrollY,
-    innerHeight
+    scrollY
   });
 </script>
 ```
 
-And that seemed...ok, I guess? It worked, but I thought it was kind of ugly (in the actual code there were a lot more props and local vars). I had a bunch of unnecessary stores and redeclared variables prefixed with underscores -- it got pretty tedious whenever I wanted to change something.
+And that seemed...ok, I guess? It worked, but I thought it was kind of ugly (in the actual code there were *a lot* of props and local vars). I had a bunch of unnecessary stores and redeclared variables prefixed with underscores -- it got pretty tedious whenever I wanted to change something.
 
-But then I remembered a cool pattern I had come across in the IBM component library. It goes a little something like this: **instead of passing all those props and vars *down* to the children, you pass functions that take them as arguments *up* to the parent**. Rad!
+But then I remembered a cool `context` pattern I had come across in the IBM component library. It goes a little something like this: **instead of passing all those props and vars *down* to the children, you pass functions that take them as arguments *up* to the parent.** Rad!
 
 ### The actual code!
 
@@ -119,7 +114,6 @@ First we set up our `context` and an array to hold the children and their method
   export let cancel;
 
   let scrollY;
-  let innerHeight;
 
   // eventually full of `Child` objects with methods
   let children = [];
@@ -148,7 +142,7 @@ Then, in `Child.svelte` we grab the `context`, set up our object, and call `add`
 
   // Child object with fancy method
   const child = {
-    func: (scrollY, innerHeight, cancel) => {
+    func: (config, cancel, scrollY) => {
       // eventually do stuff with those values
     }
   };
@@ -169,7 +163,7 @@ And then use it in `Parent.svelte`:
 
 ```javascript
 $: children.forEach(child => {
-     child.func(scrollY, innerHeight, cancel));
+     child.func(config, cancel, scrollY));
    });
 ```
 
@@ -178,12 +172,12 @@ Now, whenever the props and vars change in `Parent` (including `children`), thos
 To run the methods *only* when the props/vars change, you can "hide" `children` from the reactive statement by moving the `forEach` into it's own function:
 
 ```javascript
-$: runAll(scrollY, innerHeight, cancel);
+$: runAll(config, cancel, scrollY);
 
-function runAll(scrollY, innerHeight, cancel) {
+function runAll(config, cancel, scrollY) {
   // "hide" `children` from reactive statement
   children.forEach(child => {
-    child.func(scrollY, innerHeight, cancel);
+    child.func(config, cancel, scrollY);
   });
 }
 ```
@@ -195,7 +189,7 @@ const child = {
   name: nameProp,
   type: typeProp,
   props: ['some', 'other', 'props'],
-  func: (scrollY, innerHeight, cancel) => {
+  func: (config, cancel, scrollY) => {
     // do stuff!
   }
 }
