@@ -97,7 +97,8 @@ h3 :not(pre) > code {
 .token.boolean,
 .token.keyword,
 .token.important,
-.token.atrule {
+.token.atrule,
+.token.namespace {
   color: #fb4934; /* red2 */
 }
 
