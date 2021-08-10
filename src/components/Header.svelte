@@ -78,10 +78,10 @@
     width: 0;
     height: 0;
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: calc(50% - var(--size));
     border: var(--size) solid transparent;
-    border-top: var(--size) solid var(--background-color);
+    border-bottom: var(--size) solid var(--background-color);
   }
 
   nav a {
