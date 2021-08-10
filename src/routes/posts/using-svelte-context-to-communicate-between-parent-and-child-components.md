@@ -58,7 +58,7 @@ In Svelte, we have the [let directive](https://svelte.dev/tutorial/slot-props) t
 
 But I wanted to avoid it for a few reasons. First, it seemed too "noisy" -- I wanted a simple, clean API which, for me, meant only passing props down -- without any boilerplate. One of the main reasons devs use component libraries is to abstract away all of the set up.
 
-Second, if a user wanted to have a lot of `Child` components, they would need to pass down just as many `Parent` props. All that repitition could lead to forgetting to pass them, which could lead to bugs and frustration.
+Second, if a user wanted to have a lot of `Child` components, they would need to pass down just as many `Parent` props. All that repitition creates more chances to forget to pass them, which could lead to bugs and frustration.
 
 And third, I still had local variables to pass down. In order to make development easier on myself, I wanted all data to be passed between components *together*.
 
@@ -77,7 +77,7 @@ In order to "hide" this prop passing, I reached for Svelte's Context API:
 
   let scrollY;
 
-  // these will be available to any components nested in `Parent`
+  // available to any components nested in `Parent`
   setContext('contextKey', {
     config,
     cancel,
@@ -126,7 +126,7 @@ But then I remembered a cool `context` pattern I had come across in IBM's [carbo
 
 ### The actual code!
 
-First we set up our `context` and an array to hold the children and their methods. The `context` itself contains two methods -- one for adding a `Child` and one for removing it:
+First, we set up our `context` and an array to hold the children and their methods. The `context` itself contains two methods -- one for adding a `Child` and one for removing it:
 
 ```svelte
 <!-- Parent.svelte -->
@@ -218,6 +218,6 @@ const child = {
 }
 ```
 
-So, there you have it -- instead of using `context` to pass data, we use it as a fancy portal to communicate between components.
+So, there you have it -- instead of using `context` to pass static props or stores, we can use it as a fancy portal to communicate between components.
 
 *If you'd like to mess around with this pattern, I made a little [REPL example](https://svelte.dev/repl/041d9d959a2e4cbc8c3a2519724df472?version=3.42.1) that you can play with. And if you want to see it in action, you can check out my actual project here -- [svelte-parallax](https://github.com/kindoflew/svelte-parallax).*
