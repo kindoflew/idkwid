@@ -109,5 +109,9 @@
     nav a:hover {
       color: var(--primary-color);
     }
+
+    li.active::before {
+      border-bottom: var(--size) solid var(--primary-color);
+    }
   }
 </style>
