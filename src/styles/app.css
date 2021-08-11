@@ -3,15 +3,16 @@
 @import '@fontsource/fira-mono';
 
 :root {
-  --primary-color: #a2cfa2;
+  /* --primary-color: #a2cfa2; */
+  --primary-color: #8ec07c;
   --font-heading: 'Anton', sans-serif;
   --font-mono: 'Fira Mono', monospace;
 
-  --text-color: #464646;
+  /* --text-color: #464646; */
+  --text-color: #3f3f3f;
   --text-light: #fff5dc;
   --text-gray: #6b6b6b;
-  
-  /* --background-color: #fdd5db; */
+
   --background-color: var(--primary-color);
   --background-light: #fff6e5;
   --border-color: var(--primary-color);
@@ -73,7 +74,8 @@ a:focus:not(:focus-visible) {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-color: #5aeb7e;
+    /* --primary-color: #5aeb7e; */
+    --primary-color: #6dd36f;
     --text-color: #fff8db;
     --text-gray: #9c9c9c;
 
@@ -82,7 +84,12 @@ a:focus:not(:focus-visible) {
   }
 
   a:hover {
-    color: #5aeb7e;
     color: var(--primary-color);
+  }
+}
+
+@media (max-width: 600px) {
+  div > h2 {
+    font-size: 1.6rem;
   }
 }

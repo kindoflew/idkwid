@@ -107,7 +107,7 @@
 
   @media (prefers-color-scheme: dark) {
     nav a:hover {
-    color: var(--primary-color);
-  }
+      color: var(--primary-color);
+    }
   }
 </style>
